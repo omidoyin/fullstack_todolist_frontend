@@ -1,38 +1,252 @@
+
+body {
+background-color: #d9dbe1;
+/* margin: 0 23px; */
+}
+
+
 .App {
   text-align: center;
+  position: relative;
+ 
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* .container {
+  height: 100vh;
+} */
+.customflex {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+button {
+  background-color: #000000b4;
   color: white;
+  border-radius: 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  width: fit-content;
+}
+.container {
+  height: 100vh;
+  position: relative;
+
+  /* padding-bottom: 4rem; */
 }
 
-.App-link {
-  color: #61dafb;
+.navbar {
+  flex-direction: row;
+  justify-content: space-around;
+ 
+}
+.nav-bar {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(48, 88, 207);
+  /* height: 5vh; */
+  height: 7vmin;
+  font-size: 2.5vmin;
+ 
+}
+.nav-bar button {
+  position: relative;
+  bottom: 0;
+  margin: auto 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.todo-form form {
+  margin-top: 2rem;
+  width: 100%;
+  position: relative;
+}
+.todo-form form >* {
+  width: 30%;
+  padding: .5em 0;
+}
+.color-gradient {
+  --size : 70vmin;
+  background-image: linear-gradient(to bottom right, rgb(48, 88, 207), rgb(169, 204, 232));
+  /* margin: 0px 100px; */
+  width: var(--size);
+  height: var(--size);
+  justify-content: flex-start;
+  padding-top: 30px;
+  font-size: 6vmin;
+  margin-top: 40px;
+}
+
+/* .login-form-container { */
+  /* position: relative;
+  background-color: #130404; */
+  /* height: 300px; */
+/* } */
+
+.login-form, .register-form {
+  /* background-color: #dd2121; */
+ position: absolute;
+ width: 30vmax;
+ height: 20%;
+ right: 0;
+ left: 0;
+ margin: 0 auto;
+ top: 0;
+ z-index: 1;
+ font-size: 1.2em;
+
+ margin-top: 9rem;
+}
+.login-form input, .register-form input {
+width: 100%;
+margin-bottom: 0.5rem;
+padding: .5rem 0rem;
+font-size: 1em;
+}
+.register-form::after,
+.login-form::after {
+content: '';
+background-color: #4566c9;
+border: blue 1px dashed;
+position: absolute;
+width: 32vmax;
+height: 250px;
+z-index: -1;
+}
+
+.completed {
+  --fz:3vmin;
+  color: aliceblue;
+  background-color: #a8e646;
+  font-size: var(--fz);
+}
+.not-completed {
+  --fz:3vmin;
+  color: aliceblue;
+  background-color: #574242b4;
+  font-size: var(--fz);
+  
+}
+
+.todo-container {
+  width: 70vw;
+  margin: 0 auto;
+  margin-top: 1rem;
+  /* margin-bottom: 5rem; */
+}
+@media screen and (max-width:1024px) {
+  .todo-container {
+    width: 90vw;
   }
-  to {
-    transform: rotate(360deg);
+  .todo-form form {
+    margin-top: 2rem;
+    width: 100%;
+    position: relative;
+  }
+  .todo-form form >* {
+    width: 30vmax;
   }
 }
+@media screen and (max-width:430px) {
+  .todo-container {
+    width: 100vw;
+  }
+}
+
+.gridD {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  /* margin: 30px; */
+  /* margin-right: 30px; */
+  margin-left: 0;
+  padding: .5rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.gridD h3 {
+  font-weight: bold;
+  color: #000000;
+}
+.gridD span {
+  font-weight: bold;
+  color: #2a52cd;
+  background-image: linear-gradient(to bottom right, rgb(48, 88, 207), rgb(169, 204, 232));
+  background-clip: text;
+  
+}
+.gridD button {
+  position: relative;
+  display: flex;
+  right: -7vmin;
+}
+.modal-view {
+  display: flex;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  margin: 0 auto;
+  width: fit-content;
+  height: fit-content;
+  background-color: #152830;
+  z-index: 5;
+  /* padding-top: 20px; */
+  /* padding: 0 10px; */
+  /* padding-bottom: 40px; */
+}
+.modal-view form >* {
+  width: 80%;
+  
+}
+.modal-view form button {
+  position: relative;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  font-size: 1.3rem;
+}
+.modal-view label {
+font-size: 1.3rem;
+}
+.modal-view p {
+  cursor: pointer;
+  font-size: 1.3rem;
+  margin: 0;
+  width: 100%;
+  align-self: flex-end;
+  text-align: left;
+}
+.modal-view input {
+box-sizing: border-box;
+padding: .5rem ;
+font-size: 1rem;
+}
+.modal-view form textarea {
+  height: 50px;
+  font-size: 1rem;
+  padding: .5rem ;
+  box-sizing: border-box;
+  
+}
+
+.footer {
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  bottom: -55vh;
+  /* top: 0; */
+  padding-top: 1.5rem;
+  height: 4rem;
+  background-color: #000000;
+  color: white;
+  width: 100vw;
+}
+.exit-button{
+  position: relative;
+  left: 160px;
+  top: 10px;
+}
+
+

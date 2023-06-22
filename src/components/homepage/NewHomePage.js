@@ -16,6 +16,7 @@ const NewHomePage = () => {
   const [task, setTask] = useState("");
   const [newtask, setNewTask] = useState("");
   const [newtaskname, setNewTaskName] = useState("");
+  const [newimage, setNewImage] = useState("");
   // const[iscompleted, setIscompleted]= useState('')
   const [taskname, setTaskName] = useState("");
   const [todos, setTodos] = useState();
@@ -41,21 +42,33 @@ const NewHomePage = () => {
   const submitTask = async (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("image",image)
     formData.append("taskname",taskname)
     formData.append("task",task)
     formData.append("userid",auth?.userid)
+    formData.append("image",image)
     console.log(...formData)
 
     try {
       console.log(auth?.userid);
       console.log(todos);
-      const { data } = await axiosPrivate.post("/todolist", {
-        taskname,
-        task,
-        userid: auth?.userid,
-      });
-      setTodos([...todos, data]);
+      // ..........................test..............................
+      // const { data } = await axios.post("http://localhost:5500/upload", 
+      //  formData
+  
+      // ,
+      // {
+
+      //   headers:{"Content-Type": "multipart/form-data"}
+      // }
+      // );
+      const { data } = await axiosPrivate.post("/todolist", formData);
+      if (data){
+        
+        setTodos([...todos, data]);
+        console.log("its wrong")
+      }else{
+        // call a pop up class and display unable to post to user....
+      }
       
     } catch (err) {
       console.error(err);
@@ -65,15 +78,22 @@ const NewHomePage = () => {
 
   const updateTask = async (e) => {
     e.preventDefault();
+    let formData = new FormData();
+    formData.append("taskname",newtaskname)
+    formData.append("task",newtask)
+    formData.append("image",newimage)
     try {
       const { data } = await axiosPrivate.put(
         `/todolist/${clickedTodoID}`,
-        { task: newtask, taskname: newtaskname },
+        // { task: newtask, taskname: newtaskname },
+        formData,
         { withCredentials: true }
       );
       console.log(data);
+      console.log(...formData);
 
       if (data) {
+        // setFile(URL.createObjectURL(newimage));
         setTodos(
           todos.map((todo) =>
             todo._id === clickedTodoID
@@ -82,6 +102,9 @@ const NewHomePage = () => {
                   task: newtask,
                   taskname: newtaskname,
                   iscompleted: todo.iscompleted,
+                  imageUrl:URL.createObjectURL(newimage)
+                  
+                  // set the image to show here
                 }
               : todo
           )
@@ -222,6 +245,7 @@ const NewHomePage = () => {
           if (isMounted) {
             setNewTask(data[0]?.task);
             setNewTaskName(data[0]?.taskname);
+            // setNewImage(data[0]?.imageUrl)
 
             // data?.map((newData)=>{
             //   console.log(newData.task)
@@ -269,8 +293,7 @@ const NewHomePage = () => {
         {isLoggedIn? (
           <form className="customflex">
             <h2>file upload</h2>
-            <input type="file" name="image" onChange={(e) => {
-                setImage(e.target.files[0]);
+            <input type="file" name="image" onChange={(e) => {setImage(e.target.files[0]);
               }} />
             <label htmlFor="task"> Task</label>
             <input
@@ -319,6 +342,7 @@ const NewHomePage = () => {
                   <div>
                     <h3><span>task: </span>{todo?.taskname}</h3>
                     <h3><span>todo: </span>{todo?.task}</h3>
+                    <img src={todo.imageUrl} />
                     {/* {console.log("todo task", todo?.task)} */}
                   </div>
                   <div>
@@ -359,6 +383,7 @@ const NewHomePage = () => {
                           X
                         </p>
                         <label htmlFor="task"> Task</label>
+                        {/* <img src={newimage} alt="" /> */}
                         <input
                           type="text"
                           id="task"
@@ -379,6 +404,7 @@ const NewHomePage = () => {
                             setNewTaskName(e.target.value);
                           }}
                         ></textarea>
+                        <input type="file"  name="image" onChange={(e)=>{setNewImage(e.target.files[0])}} />
                         {/* <h2>{todo._id}</h2> */}
                         <button onClick={updateTask}>Submit</button>
                       </form>

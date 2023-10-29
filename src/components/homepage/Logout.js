@@ -5,6 +5,9 @@ import useAuth from '../hooks/useAuth';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import {useNavigate} from 'react-router-dom'
 
+// const Base_Url = "http://localhost:5500/logout"
+const Base_Url = "https://todolistapi.cyclic.app/logout"
+
 const Logout = () => {
 
     const {setAuth,auth, setPersist,persist, setIsLoggedIn} = useAuth();
@@ -14,7 +17,7 @@ const Logout = () => {
     const HandleLogout = async (e)=>{
         e.preventDefault();
         try{
-         const {data} =  await axiosPrivate.get("http://localhost:5500/logout")
+         const {data} =  await axiosPrivate.get(Base_Url)
          console.log(data)
          if(data){
           setAuth(null)

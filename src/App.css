@@ -1,14 +1,11 @@
-
 body {
-background-color: #d9dbe1;
-/* margin: 0 23px; */
+  background-color: #ffffff9e;
+  /* margin: 0 23px; */
 }
-
 
 .App {
   text-align: center;
   position: relative;
- 
 }
 /* .container {
   height: 100vh;
@@ -20,12 +17,20 @@ background-color: #d9dbe1;
   align-items: center;
 }
 button {
-  background-color: #000000b4;
+  background-color: black;
   color: white;
-  border-radius: 20px;
-  font-size: 1.2em;
+  border-radius: 10px;
+  font-size: 1.2rem;
   cursor: pointer;
   width: fit-content;
+  padding: 0 1rem;
+  transition: all 0.2s ease-in ;
+  margin-top: 12px;
+}
+
+button:hover {
+  background-color: rgb(247, 245, 245);
+  color: rgb(0, 0, 0);
 }
 .container {
   height: 100vh;
@@ -37,17 +42,17 @@ button {
 .navbar {
   flex-direction: row;
   justify-content: space-around;
- 
 }
 .nav-bar {
   padding-top: 10px;
   display: flex;
   justify-content: space-around;
   background-color: rgb(48, 88, 207);
+  background-color: rgb(0, 0, 0);
   /* height: 5vh; */
   height: 7vmin;
   font-size: 2.5vmin;
- 
+  border-bottom: 3px solid gray;
 }
 .nav-bar button {
   position: relative;
@@ -56,22 +61,37 @@ button {
 }
 
 .todo-form form {
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  margin-bottom: 4rem;
   margin-top: 2rem;
-  width: 100%;
   position: relative;
-}
-.todo-form form >* {
+  width: 100%;
   width: 30%;
-  padding: .5em 0;
+  position: relative;
+  border: 10px solid #6c6fc6b4;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #fff;
 }
+.todo-form form > * {
+  width: 30%;
+  width: 90%;
+  padding: 0.5em 0;
+}
+
 .todo-form form input,
-.todo-form form textarea
- {
-padding: .5rem;
+.todo-form form textarea {
+  padding: 0.5rem;
 }
 .color-gradient {
-  --size : 70vmin;
-  background-image: linear-gradient(to bottom right, rgb(48, 88, 207), rgb(169, 204, 232));
+  --size: 70vmin;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(48, 88, 207),
+    rgb(169, 204, 232)
+  );
   /* margin: 0px 100px; */
   width: var(--size);
   height: var(--size);
@@ -79,57 +99,63 @@ padding: .5rem;
   padding-top: 30px;
   font-size: 6vmin;
   margin-top: 40px;
+  border-radius: 0.5rem;
+}
+.icon {
+  margin-top: 2rem;
+  font-size: 10rem;
 }
 
 /* .login-form-container { */
-  /* position: relative;
+/* position: relative;
   background-color: #130404; */
-  /* height: 300px; */
+/* height: 300px; */
 /* } */
 
-.login-form, .register-form {
+.login-form,
+.register-form {
   /* background-color: #dd2121; */
- position: absolute;
- width: 30vmax;
- height: 20%;
- right: 0;
- left: 0;
- margin: 0 auto;
- top: 0;
- z-index: 1;
- font-size: 1.2em;
+  position: absolute;
+  width: 30vmax;
+  height: 20%;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  top: 0;
+  z-index: 1;
+  font-size: 1.2em;
 
- margin-top: 9rem;
+  margin-top: 9rem;
 }
-.login-form input, .register-form input {
-width: 100%;
-margin-bottom: 0.5rem;
-padding: .5rem 0rem;
-font-size: 1em;
+.login-form input,
+.register-form input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0rem;
+  font-size: 1rem;
 }
 .register-form::after,
 .login-form::after {
-content: '';
-background-color: #4566c9;
-border: blue 1px dashed;
-position: absolute;
-width: 32vmax;
-height: 250px;
-z-index: -1;
+  content: "";
+  background-color: #4566c9;
+  border: blue 1px dashed;
+  position: absolute;
+  width: 32vmax;
+  height: 250px;
+  z-index: -1;
 }
 
 .completed {
-  --fz:3vmin;
+  --fz: 3vmin;
   color: aliceblue;
   background-color: #a8e646;
   font-size: var(--fz);
 }
 .not-completed {
-  --fz:3vmin;
+  --fz: 3vmin;
   color: aliceblue;
-  background-color: #574242b4;
+  background-color: #6c6fc6b4;
   font-size: var(--fz);
-  
 }
 
 .todo-container {
@@ -138,35 +164,36 @@ z-index: -1;
   margin-top: 1rem;
   /* margin-bottom: 5rem; */
 }
-@media screen and (max-width:1024px) {
-  .todo-container {
-    width: 90vw;
-  }
-  .todo-form form {
-    margin-top: 2rem;
-    width: 100%;
-    position: relative;
-  }
-  .todo-form form >* {
-    width: 30vmax;
-  }
+
+.todo-card {
+  border: 1px solid rgb(2, 0, 0);
+  border-radius: 30px;
+  background-color: #fff;
+  padding: 20px;
 }
-@media screen and (max-width:430px) {
-  .todo-container {
-    width: 100vw;
-  }
+.btn-card {
+  padding: 20px;
 }
 
 .gridD {
   position: relative;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  border-radius: 30px;
+  border: 1px solid black;
+  box-shadow: 5px 5px #efecec;
+
   /* margin: 30px; */
   /* margin-right: 30px; */
   margin-left: 0;
-  padding: .5rem;
+  padding: 0.5rem;
   margin-bottom: 20px;
   color: #ffffff;
+  transition: all .2s ease-in;
+}
+.gridD:hover {
+  transform: scale(1.02);
+  box-shadow: 5px 5px #4158dc;
 }
 
 .gridD h3 {
@@ -176,14 +203,17 @@ z-index: -1;
 .gridD span {
   font-weight: bold;
   color: #2a52cd;
-  background-image: linear-gradient(to bottom right, rgb(48, 88, 207), rgb(169, 204, 232));
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(48, 88, 207),
+    rgb(169, 204, 232)
+  );
   background-clip: text;
-  
 }
 .gridD img {
-width: 100px;
-height: 100px;
-border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 .gridD button {
   position: relative;
@@ -206,9 +236,8 @@ border-radius: 50%;
   /* padding: 0 10px; */
   /* padding-bottom: 40px; */
 }
-.modal-view form >* {
+.modal-view form > * {
   width: 80%;
-  
 }
 .modal-view form button {
   position: relative;
@@ -218,7 +247,7 @@ border-radius: 50%;
   font-size: 1.3rem;
 }
 .modal-view label {
-font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 .modal-view p {
   cursor: pointer;
@@ -229,16 +258,15 @@ font-size: 1.3rem;
   text-align: left;
 }
 .modal-view input {
-box-sizing: border-box;
-padding: .5rem ;
-font-size: 1rem;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
 }
 .modal-view form textarea {
   height: 50px;
   font-size: 1rem;
-  padding: .5rem ;
+  padding: 0.5rem;
   box-sizing: border-box;
-  
 }
 
 .footer {
@@ -253,10 +281,84 @@ font-size: 1rem;
   color: white;
   width: 100vw;
 }
-.exit-button{
+.exit-button {
   position: relative;
   left: 160px;
   top: 10px;
 }
 
+@media screen and (max-width: 1024px) {
+  .todo-container {
+    width: 90vw;
+  }
+  .todo-form form {
+    margin-top: 2rem;
+    width: 60vmin;
+    position: relative;
+  }
+  .todo-form form > * {
+    width: 30vmax;
+  }
+}
 
+@media screen and (max-width:768px) {
+  .todo-form form {
+    width: 60vmin;
+    /* width: 10rem; */
+    padding: 0px;
+      }
+  .todo-form form > * {
+    width: 80%;
+  }
+  .gridD img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .gridD button {
+    right: 0vmin;
+  }
+  .btn-card {
+    margin-top: 2rem;
+  }
+  
+}
+@media screen and (max-width:435px) {
+  .todo-form form {
+    width: 80vmin;
+    /* width: 10rem; */
+    padding: 0px;
+      }
+  .todo-form form > * {
+    width: 80%;
+  }
+  .todo-container {
+    width: 90vw;
+  }
+  .gridD img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  button {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    font-size: .5rem;
+    cursor: pointer;
+    width: fit-content;
+    padding: 0 .2rem;
+    transition: all 0.2s ease-in ;
+    margin-top: 12px;
+  }
+  .btn-card {
+    padding: 0 10px;
+  }
+  .gridD button {
+    position: relative;
+    display: flex;
+    right: 0vmin;
+  }
+  
+
+}

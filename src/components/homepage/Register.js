@@ -13,11 +13,14 @@ const Register = () => {
     const[registerForm, setRegisterForm] = useState(false)
 
     // .............customs hooks
-//   const {setAuth,auth, setPersist,persist} = useAuth();
+  const {isLoggedIn} = useAuth();
 //   const axiosPrivate = useAxiosPrivate();
 
   const handleRegisterForm = ()=>{
-    setRegisterForm(prev=>!prev)
+    if(!isLoggedIn){
+      setRegisterForm(prev=>!prev)
+
+    }
     // setLoginForm(false)
   }
   const handleEmail = (e)=>{

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../App.css";
-import axios from "axios";
+// import axios from "axios";
 import useAuth from "../hooks/useAuth";
 // import { axiosPrivate } from './components/api/Api';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -8,10 +8,12 @@ import Register from "./Register";
 import LogIn from "./LogIn";
 import PersistLogin from "../PersistLogin";
 import Logout from "./Logout";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const NewHomePage = () => {
-  const [logIn, setLogIn] = useState(false);
-  const [userid, setUserId] = useState("");
+  const imgRef = useRef();
+  // const [logIn, setLogIn] = useState(false);
+  // const [userid, setUserId] = useState("");
 
   const [task, setTask] = useState("");
   const [newtask, setNewTask] = useState("");
@@ -24,7 +26,7 @@ const NewHomePage = () => {
   const [status, setStatus] = useState(false);
   const [editTask, setEditTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [tests, setTests] = useState(false);
+  const [, setTests] = useState(false);
   const [image, setImage] = useState();
 
   const test = () => {
@@ -32,7 +34,7 @@ const NewHomePage = () => {
   };
 
   // .............customs hooks
-  const { setAuth, auth, setPersist, persist, isLoggedIn } = useAuth();
+  const { auth, isLoggedIn } = useAuth();
   const axiosPrivate = useAxiosPrivate();
 
   //...........................request................................
@@ -42,36 +44,29 @@ const NewHomePage = () => {
   const submitTask = async (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("taskname",taskname)
-    formData.append("task",task)
-    formData.append("userid",auth?.userid)
-    formData.append("image",image)
-    console.log(...formData)
+    formData.append("taskname", taskname);
+    formData.append("task", task);
+    formData.append("userid", auth?.userid);
+    formData.append("image", image);
+    console.log(...formData);
 
     try {
       console.log(auth?.userid);
       console.log(todos);
-      // ..........................test..............................
-      // const { data } = await axios.post("http://localhost:5500/upload", 
-      //  formData
-  
-      // ,
-      // {
 
-      //   headers:{"Content-Type": "multipart/form-data"}
-      // }
-      // );
       const { data } = await axiosPrivate.post("/todolist", formData);
-      if (data){
-        
+      if (data) {
         setTodos([...todos, data]);
-        console.log("its wrong")
-      }else{
+        setTask("");
+        setTaskName("");
+        setTaskName("");
+        setImage(null);
+        imgRef.current.value = null;
+      } else {
         // call a pop up class and display unable to post to user....
       }
-      
     } catch (err) {
-      console.error(err);
+      console.log(err);
     } finally {
     }
   };
@@ -79,9 +74,9 @@ const NewHomePage = () => {
   const updateTask = async (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("taskname",newtaskname)
-    formData.append("task",newtask)
-    formData.append("image",newimage)
+    formData.append("taskname", newtaskname);
+    formData.append("task", newtask);
+    formData.append("image", newimage);
     try {
       const { data } = await axiosPrivate.put(
         `/todolist/${clickedTodoID}`,
@@ -91,6 +86,8 @@ const NewHomePage = () => {
       );
       console.log(data);
       console.log(...formData);
+
+      // console.log(newimage);
 
       if (data) {
         // setFile(URL.createObjectURL(newimage));
@@ -102,8 +99,9 @@ const NewHomePage = () => {
                   task: newtask,
                   taskname: newtaskname,
                   iscompleted: todo.iscompleted,
-                  imageUrl:URL.createObjectURL(newimage)
-                  
+
+                  // imageUrl: URL.createObjectURL(newimage),
+
                   // set the image to show here
                 }
               : todo
@@ -179,7 +177,7 @@ const NewHomePage = () => {
     }
   };
   //...........................USEEFFECTS...............................
-// to get user todolists
+  // to get user todolists
   useEffect(
     (e) => {
       let isMounted = true;
@@ -290,16 +288,24 @@ const NewHomePage = () => {
       <section className="todo-form ">
         {/* auth?.accesstoken */}
         {/* isLoggedIn? */}
-        {isLoggedIn? (
-          <form className="customflex">
-            <h2>file upload</h2>
-            <input type="file" name="image" onChange={(e) => {setImage(e.target.files[0]);
-              }} />
+        {isLoggedIn ? (
+          <form className="customflex" data-testid="inputTodoForm">
+            <h2>Todo Form</h2>
+            <input
+              ref={imgRef}
+              data-testid="fileUpload"
+              type="file"
+              name="image"
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
+            />
             <label htmlFor="task"> Task</label>
             <input
               type="text"
               name="task"
               id="task"
+              value={task}
               onChange={(e) => {
                 setTask(e.target.value);
               }}
@@ -310,49 +316,58 @@ const NewHomePage = () => {
               id="todo"
               cols="30"
               rows="5"
+              value={taskname}
               onChange={(e) => {
                 setTaskName(e.target.value);
               }}
             ></textarea>
-            <button onClick={submitTask}>Submit</button>
+            <button onClick={submitTask}>Post Todo</button>
           </form>
         ) : (
-          <div
-            className="customflex"
-            
-          >
+          <div className="customflex">
             <div className="color-gradient customflex">
-              Welcome to Todo list
+              Plan Your Day Right
+              <i>
+                <EditNoteIcon fontSize="" className="icon" />
+              </i>
             </div>
           </div>
         )}
       </section>
-      <section className="todolists">
+      <section className="todolists" data-testid="todolists">
         <div className="todo-container">
-          {
-            todos?.map((todo, index) => (
+          {todos
+            ?.sort((a, b) => (b.createdAt > a.createdAt ? 1 : -1))
+            .map((todo, index) => (
               <div key={index}>
                 <div
+                  data-testid="aTodList"
                   className={
                     todo?.iscompleted
                       ? "completed gridD"
                       : "not-completed gridD"
                   }
                 >
-                  <div>
-                    <h3><span>task: </span>{todo?.taskname}</h3>
-                    <h3><span>todo: </span>{todo?.task}</h3>
-                    <img src={todo.imageUrl} />
+                  <div className="todo-card">
+                    <h3 data-testid="ouputtask">
+                      <span>Task: </span>
+                      {todo?.task}
+                    </h3>
+                    <h3 title="task" data-testid="outputtaskname">
+                      <span>Todo: </span>
+                      {todo?.taskname}
+                    </h3>
+                    <img src={todo.imageUrl} alt="" />
                     {/* {console.log("todo task", todo?.task)} */}
                   </div>
-                  <div>
+                  <div className="btn-card">
                     <button
                       onClick={() => {
                         setEditTask((prev) => !prev);
                         setClickedTodoID(todo?._id);
                       }}
                     >
-                      edit
+                      Edit
                     </button>
 
                     <button
@@ -364,11 +379,11 @@ const NewHomePage = () => {
                         );
                       }}
                     >
-                      completed
+                      {todo?.iscompleted ? "Completed" : "Uncompleted"}
                     </button>
 
                     <button onClick={() => deleteTask(todo?._id)}>
-                      delete
+                      Delete
                     </button>
                   </div>
                   <div className="modal-view ">
@@ -404,7 +419,13 @@ const NewHomePage = () => {
                             setNewTaskName(e.target.value);
                           }}
                         ></textarea>
-                        <input type="file"  name="image" onChange={(e)=>{setNewImage(e.target.files[0])}} />
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) => {
+                            setNewImage(e.target.files[0]);
+                          }}
+                        />
                         {/* <h2>{todo._id}</h2> */}
                         <button onClick={updateTask}>Submit</button>
                       </form>
